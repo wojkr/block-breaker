@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Rajdhani:wght@300;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Block Breaker</title>
+</head>
+
+<body>
+    <div id="menu-screen-div" class="menu-screen">
+        <div class="container">
+
+            <h1 id="menu-title"><span id="menu-title-highlited-1">BLOCK</span> <br><span
+                    id="menu-title-highlited-2">BREAKER</span> <br><span id="menu-title-highlited-3"
+                    class="menu-text-highlited">by
+                    dablju</span>
+            </h1>
+            <div id="menu-text-play" class="menu-text">
+                <h2 id="menu-header-play"></h2>
+                <p id="menu-p-play"></p>
+            </div>
+            <div id="menu-text-start" class="menu-text">
+                <p><span id="menu-text-highlited" class="menu-text-highlited">Loading</span><br>Move pad using
+                    arrowRight & arrowLeft<br>
+                    press space when actions required
+                    (bonuses, start game).</p>
+            </div>
+
+            <div id="menu-text-about" class="menu-text">
+                <p>First project ive done. VanillaJS, onlyCSS. Complete game, currently consists of
+                    10 levels, 11 bonuses. From time to time
+                    i come back to it and improve a little bit, step by step. I want to clean
+                    the code, optimaize it a bit, add some levels with moving bosses, multiplayer. </p>
+            </div>
+
+            <ul class="menu-ul">
+                <li class="menu-li">
+                    <button id="menu-btn-start" class="menu-btn">START GAME</button>
+                </li>
+                <li class="menu-li">
+                    <button id="menu-btn-play" class="menu-btn">PLAY</button>
+                </li>
+                <li class="menu-li">
+                    <button id="menu-btn-mode" class="menu-btn">CHANGE MODE</button>
+                </li>
+                <li class="menu-li">
+                    <button id="menu-btn-about" class="menu-btn">ABOUT</button>
+                </li>
+                <li class="menu-li">
+                    <button id="menu-btn-back" class="menu-btn">GO BACK</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="area">
+        <h1 id='info'>Press Space to start the Game!</h1>
+        <div class="gameContainer">
+            <div id="game"></div>
+            <div class="gameContainerRight">
+                <div>
+                    <p>Level: <span id="level">1</span></p>
+                    <p>Points: <span id="points">0</span></p>
+                    <p>Bonus Duration: <span id="bonus-duration">10s</span></p>
+                    <div class="bonus-info-box">
+                        <div class="bonus-info-col bonus-info-col-1">
+                            <h2>Bonus:</h2>
+                            <div class="bonus-info-list" id="bonus-info-list-bonus">
+                            </div>
+                        </div>
+                        <div class="bonus-info-col">
+                            <h2>Time: </h2>
+                            <div class="bonus-info-list" id="bonus-info-list-time">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="btn-reset">RESET</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
