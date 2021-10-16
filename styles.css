@@ -11,14 +11,12 @@
     --gameHeightToWidth: 0.8;
     --gameHeight: calc(var(--gameWidth)* var(--gameHeightToWidth));
         
-    /* --gameHeight: 400px; */                                                                                                                                                                      
     --padWidth: 0.12;
     --padHeight: 0.025;
     --padTop: 0.9;
     --padTopHit: 0.925;
     --ballRadius: 0.025;
     --bulletRadius: 0.015;
-    /* --bulletRadius: 0.05; */
 
     --bonusRadius: 0.015;
     --bonusRadiusShadow: 0.025;
@@ -36,11 +34,15 @@
     --moving: 20px;
     --movingDown: 10px;
 
+     
     --block-1: #f0f;
     --block-2: #00f;
-    --block-3: #0f0;
-    --block-4: #ff0;
-    --block-5: #f00; 
+    --block-3: #0aa;
+    --block-4: #0f0; 
+    --block-5: #ff0; 
+    --block-6: #f00; 
+    --block-7: #999;
+    --block-8: #444; 
     --block-bonus: #222;
 
     --background-color: #333;
@@ -53,30 +55,27 @@
     cursor: default;
     font-family: 'Rajdhani', sans-serif;
 }
-#game *{
+#game-container-left *{
     position: absolute;
 }
 
 body{
     background-color: var(--background-color);
-    /* display: grid;
-    place-items: center; */
     min-height: 100vh;
     overflow: hidden;
 }
-#area{
+#game-area{
     position: absolute;
     top:50%;
     left: 50%;
     transform: translate3d(-50%,-50%,0);
     transform-origin: center;
 }
-#game{
+#game-container-left{
     box-shadow: inset 0 0 0px 1px #fff4, 0 0 10px 5px #fff4;
     border-radius: calc(var(--gameHeight)* var(--ballRadius) /2);
     width: var(--gameWidth);
     height: var(--gameHeight);
-    /* border: solid var(--gameBorderWidth) #777; */
     background-image: linear-gradient(#fff1,#0004),radial-gradient(#fff1 2%, #fff0 90%);
     position: relative;
     overflow: hidden;
@@ -85,13 +84,7 @@ body{
 
 #blocks-container{
     position: absolute;
-    /* top: calc(var(--gameBorderWidth)* -1);
-    left: calc(var(--gameBorderWidth)* -1); */
-    /* width: var(--gameWidth);
-    height: var(--gameHeight); */
     transform: translate3d(calc(var(--moving)/ -2),0,0);
-    /* top: 0; */
-    /* animation: moving var(--blocksContainerAnimation) infinite; */
 }
 
 #pad{
@@ -100,22 +93,17 @@ body{
     background-color: #000;
     box-shadow: 0 0 calc(var(--gameHeight)* var(--padHeight)*0.4) #000, 0 calc(var(--gameHeight)* var(--padHeight) /2) calc(var(--gameHeight)* var(--padHeight)* 2.5) #000;
     position: relative;
-    /* top: calc(var(--gameHeight)* var(--padTop));
-    left: calc(var(--gameWidth)/2 - calc(var(--gameWidth)* var(--padWidth))/2); */
     border-radius: calc(var(--gameHeight)* var(--padHeight)/2);
     background-image: radial-gradient(#5551 20%,#0002 100%);
     transition: background-color 200ms,box-shadow 200ms, top ease-out 200ms,transform 100ms;
 }
 .pad-hitted{    
-    /* background-color: #fff8 !important; */
-    /* top: 365px !important; */
     top: calc(var(--gameHeight)* var(--padTopHit)) !important;
     box-shadow: 0 calc(var(--gameHeight)* var(--padHeight)*0.4) calc(var(--gameHeight)* var(--padHeight)) #fff7, 0 0 calc(var(--gameHeight)* var(--padHeight)) #000, 0 calc(var(--gameHeight)* var(--padHeight)/ 2) calc(var(--gameHeight)* var(--padHeight)* 2.5) #000 !important;
 }
-#info {
+#game-info {
     text-align: center;
     margin-bottom: 1rem;
-    /* width: 60% */
 }
 
 .info-fade-in-out{
@@ -127,9 +115,6 @@ body{
     100%{opacity: 1;}
 }
 
-#area p{
-    font-size: 1.1rem;
-}
 #ball{
     background-color: #fff;
     width: calc(var(--gameHeight)* var(--ballRadius));
@@ -137,9 +122,6 @@ body{
     box-shadow: 0 0 calc(var(--gameHeight)* var(--ballRadius)* 0.4) #fff;
     border-radius: 50%;
     position: relative;
-    /* top: calc(var(--gameHeight)* var(--padTop) - var(--gameHeight)* var(--padHeight) - var(--gameHeight)* var(--ballRadius));
-    left: calc(var(--gameWidth) /2 - var(--gameHeight)* var(--ballRadius) /2); */
-    /* transform-origin: center; */
     transition: box-shadow 150ms ease-out, background-color 400ms;
 }
 .ball-hitted{
@@ -157,10 +139,7 @@ body{
 .block{
     width: calc(var(--gameWidth)* var(--blockWidth));
     height: calc(var(--gameHeight)* var(--blockHeight));
-    /* background-image: linear-gradient(#fff9,#fff0,#0007); */
     position: absolute;
-    /* top: 1px;
-    left: 1px; */
     border-radius: calc(var(--gameHeight)* var(--blockHeight) *var(--blockBorderRadius));
     box-shadow: 0 calc(var(--gameHeight)* var(--blockHeight) /5) calc(var(--gameHeight)* var(--blockHeight)/ 4) #000,0 calc(var(--gameHeight)* var(--blockHeight)/ 5) calc(var(--gameHeight)* var(--blockHeight)) #0008;
     transition: var(--hittedAnimationDuration) ease-out;
@@ -180,7 +159,16 @@ body{
 }
 .block-5{
      background-color: var(--block-5);
-    }
+}
+.block-6{
+     background-color: var(--block-6);
+}
+.block-7{
+     background-color: var(--block-7);
+}
+.block-8{
+     background-color: var(--block-8);
+}
 .block-bonus{
     background-color:var(--block-bonus);
 }
@@ -190,16 +178,6 @@ body{
     background-color: #0000;
     transition-duration: calc(var(--hittedAnimationDuration) /2);
 }
-/* 
-.strip-left, .strip-right{
-    background-color: #fff4;
-    position: absolute;
-    width: 5px;
-    height: 20px;
-    left: 10px;
-    box-shadow: 0 0 2px #fff5;
-    transition: var(--hittedAnimationDuration) ease-out;
-} */
 .strip-left, .strip-right{
     background-color: #fff;
     position: absolute;   
@@ -242,7 +220,6 @@ body{
     background-color: #0000;
     transition-duration: calc(var(--hittedAnimationDuration) /2);
     opacity: 0.2;
-    /* transition-duration: calc(var(--hittedAnimationDuration) /9); */
 }
 
 .shadow{
@@ -259,15 +236,6 @@ body{
 }
 
 .shot{
-    /* background-color: #fff;
-    width: calc(var(--gameHeight) *var(--bulletRadius));
-    height: calc(var(--gameHeight) *var(--bulletRadius));
-    border-radius: calc(var(--gameHeight) *var(--bulletRadius) /2);
-    position: absolute;
-    z-index:-1;
-    animation: shot-animation var(--shotAnimationDuration) ease-out; */
-    
-    
     background-color: #fff;
     width: calc(var(--gameHeight) *var(--bulletRadius));
     height: calc(var(--gameHeight) *var(--bulletRadius));
@@ -284,10 +252,7 @@ body{
 .shot-hitted{
     width: 0 !important;
     height: 0 !important;
-    /* opacity: 0/ !important; */
-    /* background-color: #fff !important; */
     box-shadow: 0 0 calc(var(--gameHeight)* var(--ballRadius)) calc(var(--gameHeight)* var(--ballRadius)) #fff !important;
-    /* transform: rotateZ(135deg); */
 }
 
 
@@ -299,28 +264,14 @@ body{
     top:0;
     z-index: 1;
     position: absolute;
-    box-shadow: 0 0 calc(var(--gameHeight) *var(--bonusRadiusShadow)) calc(var(--gameHeight) *var(--bonusRadiusShadow)) #000;
+    box-shadow: 0 0 calc(var(--gameHeight) *var(--bonusRadiusShadow)) calc(var(--gameHeight) *var(--bonusRadiusShadow)) #000, inset 0 0 calc(var(--gameHeight) *var(--bonusRadius) /4) #000;
     transition: box-shadow var(--hittedAnimationDuration), background-color 100ms;
 }
-#bonus-time{
-    transition: color 200ms;
-}
-.bonus-sticky{
-    background-color: #0a0;
-}
-.bonus-cannon{
-    background-color: #a00;
-}
-.bonus-speedBall{
-    background-color: #00a;
-}
-.bonus-shots{
-    background-color: #aa0;
-}
+
 .bonus-time-animation, #menu-text-highlited{
     animation: bonus-time-animation 0.4s infinite;
 }
-#menu-text-highlited, #info{
+#menu-text-highlited, #game-info{
     animation-duration: 1s;
 }
 .bonus-animation{
@@ -339,12 +290,8 @@ body{
     height: 0px;
     background-color: var(--block-4);
     box-shadow: 0 0 0 0 var(--block-4);
-    /* opacity: 0.7; */
-    
-    /* box-shadow: 0 0 20px 10px var(--block-4); */
     animation: bonus-catch calc(var(--hittedAnimationDuration)/2);
     animation-fill-mode: forwards;
-
 }
 
 .hitted-up{
@@ -410,7 +357,7 @@ body{
     100%{transform: translate3d(calc(var(--moving)/ -2),calc(var(--movingDown)),0)}
 }
 
-#btn-reset{
+#game-btn-reset{
     outline: none;
     background-color: transparent;
     border: 3px solid #000;
@@ -418,13 +365,12 @@ body{
     color: #000;
     font-size: 1.2rem;
     text-transform: capitalize;
-    /* display: none; */
     padding: 0.4rem 1rem;
     margin-top: 1rem;
     cursor: pointer;
     text-align: center;
 }
-#btn-reset:hover{
+#game-btn-reset:hover{
     text-shadow: 0 0 0.2rem #fff;
     box-shadow: inset 0 0 0.2rem #fff, 0 0 0.2rem #fff;
     color: #fff;
@@ -435,19 +381,17 @@ body{
     display: block !important;
 }
 
-.gameContainer{
+#game-container{
     display: flex;
     flex-direction: row;
 }
-.gameContainerRight{
-    /* flex-grow: 2; */
+#game-container-right{
     margin-left: 1rem;
     width: 10rem;
-    /* min-height: 60vh; */
     line-height: 1.5rem;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-evenly; */
+    font-size: 0.9rem;
 }
 
 .bonus-info-box{
@@ -474,7 +418,6 @@ body{
     flex-direction: column-reverse;
     min-height: 1.5rem;
     text-indent: 0.4rem;
-    /* font-size: 0.1rem; */
 }
 
 #bonus-info-list-bonus p,#bonus-info-list-time p{
@@ -495,9 +438,7 @@ body{
     text-align: center;
     padding: 4rem;
     font-size: 2rem;
-    /* animation-duration: 1000; */
     animation-fill-mode: forwards;
-    /* transition: 1000ms; */
     opacity: 1;
 }
 
@@ -534,7 +475,6 @@ body{
     margin:2rem;
 }
 .menu-btn{
-    /* font-size: 1.2rem; */
     background-color: #fffd;
     width: 16rem;
     outline: none;
@@ -556,7 +496,7 @@ body{
     color: #000a;
 }
 
-.menu-text, .menu-btn,.gameContainer *{
+.menu-text, .menu-btn,#game-container *{
     font-family: 'Rajdhani', sans-serif;
 }
 
@@ -568,7 +508,6 @@ body{
     font-size: 1.2rem;
 }
 #menu-title{
-    /* height:33vh ; */
     line-break: strict;
     font-size: 7rem;
     margin-top: 2rem;
@@ -593,18 +532,13 @@ body{
 #menu-title-highlited-1{
     color: #900;
     font-family: 'Abril Fatface', cursive;
-  
-    /* text-shadow: 0 0 1rem #000; */
-    /* box-shadow: 0 0 1px #000; */
-    /* text-shadow: 0px -1px 1px #000; */
 }
 #menu-title-highlited-2{
-    font-family: 'Abril Fatface', cursive;
-  
+    font-family: 'Abril Fatface', cursive;  
     color:#000;
 }
 #menu-header-play{
- font-weight: 700;   
+ font-weight: 700; 
 }
 @keyframes hide{
     0%{opacity: 1;}
@@ -642,6 +576,5 @@ body{
     } 
     .menu-text{
         font-size: smaller;
-    }
-    
+    }    
 }

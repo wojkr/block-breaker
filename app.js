@@ -109,11 +109,11 @@ function createDiv(parent, id) {
     return div
 }
 
-const area = document.getElementById('area');
+const area = document.getElementById('game-area');
 
 //GAME
 const GAME = {
-    element: document.getElementById('game'),
+    element: document.getElementById('game-container-left'),
     width: 0,
     height: 0,
     left: 0,
@@ -122,8 +122,8 @@ const GAME = {
     bottom: 0,
     xAvg: 0,
     yAvg: 0,
-    containerRight: document.querySelector('.gameContainerRight'),
-    container: document.querySelector('.gameContainer'),
+    containerRight: document.getElementById('game-container-right'),
+    container: document.getElementById('game-container'),
     scale: 1,
     points: 0,
     maxPoints: 0,
@@ -279,7 +279,7 @@ const GAME = {
 
 //INFOS
 const INFO = {
-    element: document.getElementById('info'),
+    element: document.getElementById('game-info'),
     bonus: {
         element: document.getElementById('bonus'),
         duration: document.getElementById('bonus-duration'),
@@ -288,9 +288,9 @@ const INFO = {
             time: document.getElementById('bonus-info-list-time'),
         },
     },
-    level: document.getElementById('level'),
-    points: document.getElementById('points'),
-    btnReset: document.getElementById('btn-reset'),
+    level: document.getElementById('game-level'),
+    points: document.getElementById('game-points'),
+    btnReset: document.getElementById('game-btn-reset'),
     default: 'Break All The Blocks!',
 }
 
@@ -915,12 +915,17 @@ function createBonus(block, hp, type = 0) {
     block.children[1].classList.add(`strip-${hp}`);
 }
 
+function setBonusColor(bonus) {
+    bonus.style.backgroundColor = `hsl(${BONUSES.types.indexOf(bonus.getAttribute('type')) * 360 / BONUSES.types.length}, 100%, 30%)`;
+}
+
 function sendBonus(block, bonusId = 0) {
     const bonusSent = document.createElement('div');
     bonusSent.setAttribute(`id`, bonusId);
     bonusSent.setAttribute(`type`, `${block.getAttribute('bonus')}`);
     bonusSent.classList.add('bonus');
     bonusSent.classList.add(`bonus-${block.getAttribute('bonus')}`)
+    setBonusColor(bonusSent);
     GAME.element.appendChild(bonusSent);
     bonusSent.style.top = `${parseInt(getComputedStyle(block).top) + BLOCKS.container.margin.y + BLOCKS.height / 2 / scale - parseInt(getComputedStyle(bonusSent).height) / 2}px`;
     bonusSent.style.left = `${(xy.left(BLOCKS.container.element) - GAME.left) / scale + parseInt(getComputedStyle(block).left) + BLOCKS.width / 2 / scale - parseInt(getComputedStyle(bonusSent).width) / 2}px`;
