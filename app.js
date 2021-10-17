@@ -866,7 +866,16 @@ function gameOver(lostOrWon) {
     }
     if (lostOrWon == 'won') {
         removeAllShots();
-        GAME.levelUp()
+        if (GAME.level < GAME.levels.length - 1) {
+            GAME.levelUp()
+        } else {
+            addInfo(false, 'You Won! Try now other game modes')
+            setTimeout(() => {
+                if (!GAME.isGameOver) {
+                    goToMenu();
+                }
+            }, 9000)
+        }
     }
 }
 
@@ -1352,13 +1361,16 @@ document.addEventListener('keyup', (e) => {
 })
 
 INFO.btnReset.addEventListener('click', () => {
+    goToMenu();
+});
+
+function goToMenu() {
     GAME.isGameOver = true;
     if (INFO.element.classList.contains('bonus-time-animation')) {
         INFO.element.classList.remove('bonus-time-animation');
     }
     MENU.SHOW();
-});
-
+}
 
 
 function place_pad() {
