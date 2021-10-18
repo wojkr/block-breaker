@@ -1300,6 +1300,29 @@ function addInfo(timeOut, infoStart, infoStop = false, id = 0) {
 
 document.addEventListener('keydown', (e) => {
     let dir = keys[e.which];
+
+    if (GAME.cheats && BALL.isBallMoving) {
+        if (e.which == 49) {
+            BALL.speed = 0;
+        }
+        if (e.which == 50) {
+            BALL.speed = 0.5;
+        }
+        if (e.which == 51) {
+            BALL.speed = 3;
+        }
+        if (e.which == 52) {
+            BALL.speed = 10;
+        }
+        if (e.which == 53) {
+            BALL.x = -210;
+            BALL.y = -340;
+        }
+        if (e.which == 32) {
+            sendShot();
+        }
+    }
+
     if (e.which == 32 && GAME.isGameStarted == false && GAME.isGameOver == false) {
         GAME.isGameStarted = true;
         BALL.isBallSticky = false;
@@ -1328,27 +1351,6 @@ document.addEventListener('keydown', (e) => {
     }
     if (dir && GAME.held_directions.indexOf(dir) === -1) {
         GAME.held_directions.unshift(dir);
-    }
-    if (GAME.cheats) {
-        if (e.which == 49) {
-            BALL.speed = 0;
-        }
-        if (e.which == 50) {
-            BALL.speed = 0.5;
-        }
-        if (e.which == 51) {
-            BALL.speed = 3;
-        }
-        if (e.which == 52) {
-            BALL.speed = 10;
-        }
-        if (e.which == 53) {
-            BALL.x = -210;
-            BALL.y = -340;
-        }
-        if (e.which == 32) {
-            sendShot();
-        }
     }
 })
 
