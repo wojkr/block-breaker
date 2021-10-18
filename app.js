@@ -236,7 +236,7 @@ const GAME = {
         },
         {
             name: 'cheat',
-            info: 'Press magic keys to relase bonuses: 5-stop ball, 6-have a shot.',
+            info: 'Press magic keys to relase bonuses: 1,2,3,4-change ball speed, 5-spawn ball in top area of game, space- shot.',
             addPre: () => { GAME.cheats = true },
         },
         {
@@ -1090,7 +1090,7 @@ const clock = (interval) => setInterval(() => {
 }, interval)
 
 function addBonus(type, bonusId = 0) {
-    addInfo(3000, `U caught a bonus ${type} for ${BONUSES.time.default / 1000}s`, INFO.default, bonusId);
+    addInfo(3000, `a bonus ${type} added for ${BONUSES.time.default / 1000}s`, INFO.default, bonusId);
     if (BONUSES.timeLeft[BONUSES.types.indexOf(type)] == 0) {
         BONUSES.active[BONUSES.types.indexOf(type)] = createBonusInfo(type, BONUSES.time.default, GAME.points);
     } else {
@@ -1331,22 +1331,22 @@ document.addEventListener('keydown', (e) => {
     }
     if (GAME.cheats) {
         if (e.which == 49) {
-            BALL.speed = 0.5;
+            BALL.speed = 0;
         }
         if (e.which == 50) {
-            BALL.speed = 3;
+            BALL.speed = 0.5;
         }
         if (e.which == 51) {
-            BALL.speed = 10;
+            BALL.speed = 3;
         }
         if (e.which == 52) {
+            BALL.speed = 10;
+        }
+        if (e.which == 53) {
             BALL.x = -210;
             BALL.y = -340;
         }
-        if (e.which == 53) {
-            BALL.speed = 0;
-        }
-        if (e.which == 54) {
+        if (e.which == 32) {
             sendShot();
         }
     }
