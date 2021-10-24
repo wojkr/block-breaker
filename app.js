@@ -1291,11 +1291,11 @@ function addInfo(timeOut, infoStart, infoStop = false, id = 0) {
                         if (INFO.element.getAttribute('infoId') == id) {
                             INFO.element.innerText = infoStop;
                         }
-                    }, fadeInAndOutDuration / 2)
+                    }, fadeInAndOutDuration / 1.5)
                 }
             }, timeOut - fadeInAndOutDuration / 2)
         }
-    }, fadeInAndOutDuration / 2)
+    }, fadeInAndOutDuration / 1.5)
 }
 
 document.addEventListener('keydown', (e) => {
