@@ -463,11 +463,12 @@ body{
     0%{left: 0vw;opacity: 1;}
     33%{left: 0vw;opacity: 1;}
     66%{left: 0vw;opacity: 0;}
-    100%{left: 100vw ; opacity: 0;} 
+    100%{opacity: 0; z-index: -100 ; display: none } 
+    /* 100%{left: 100vw ; opacity: 0;z-index: -100 !important;}  */
 }
 @keyframes menu-screen-show{
     0%{left: 0vw;opacity: 0;}
-    100%{left: 0vw;opacity: 1;}
+    100%{left: 0vw;opacity: 1; display: block !important}
 }
 .menu-ul{ 
     list-style: none;

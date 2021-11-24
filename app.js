@@ -59,12 +59,19 @@ const MENU = {
                 }
                 if (!MENU.screen.classList.contains('menu-screen-hide')) {
                     MENU.screen.classList.add('menu-screen-hide')
+                    // setTimeout(() => {
+                    //     MENU.screen.style.display = "none"
+                    //     console.log('hey!!!!')
+                    // }, 3000)
                 }
                 if (GAME.isGameOver) {
                     GAME.RESET();
                 } else {
                     GAME.START();
                 }
+                document.body.style.width = window.outerWidth
+                document.body.style.height = window.outerHeight
+                console.log('hey!!!!')
             }, 5000)
         }))
         MENU.btn.listeners.push(MENU.btn.about.addEventListener('click', () => {
@@ -483,6 +490,9 @@ function reset(resetPoints = true, rows = GAME.levels[0].rows, columns = GAME.le
     if (GAME.mode[GAME.modeChosen].addPost) {
         GAME.mode[GAME.modeChosen].addPost();
     }
+    document.body.style.height = `${window.outerHeight}px`
+    document.body.style.width = `${window.outerWidth}px`
+
 }
 function resetFull() {
     BONUSES.time.change *= BONUSES.time.default;

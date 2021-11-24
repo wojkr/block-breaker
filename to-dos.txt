@@ -20,3 +20,5 @@ Changing setTimeout removing animation to animationend_event (shost, blocks(cust
     animated.addEventListener('animationend', () => {
         console.log('Animation ended');
         }); 
+
+add mobile only horizontal mode, set up the document.body size 100vh x 100vw, mobile movement https://developers.google.com/web/fundamentals/native-hardware/device-orientation/
