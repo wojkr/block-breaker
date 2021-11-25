@@ -59,10 +59,14 @@
             </ul>
         </div>
     </div>
-    <div id="game-area">
-        <h1 id='game-info'>Press Space to start the Game!</h1>
+    <!-- <div id="game-area"> -->
+    <div id="game-area" class="area-inactive">
+        <h1 id='game-info' class="game-info-mobile-off">Press Space to start the Game!</h1>
         <div id="game-container">
-            <div id="game-container-left"></div>
+            <div id="game-container-left">
+                <h1 id='game-info' class="game-info-mobile-on">Press Space to start the Game!</h1>
+                <!-- <h1 id='game-info'>Press Space to start the Game!</h1> MOBILE INFO!-->
+            </div>
             <div id="game-container-right">
                 <p>Level: <span id="game-level">1</span></p>
                 <p>Points: <span id="game-points">0</span></p>

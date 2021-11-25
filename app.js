@@ -39,6 +39,9 @@ const MENU = {
         if (!MENU.screen.classList.contains('menu-screen-show')) {
             MENU.screen.classList.add('menu-screen-show')
         }
+        if (!area.classList.contains('area-inactive')) {
+            area.classList.add('area-inactive')
+        }
     },
     LISTEN: () => {
         MENU.btn.listeners.push(MENU.btn.start.addEventListener('click', () => {
@@ -59,15 +62,14 @@ const MENU = {
                 }
                 if (!MENU.screen.classList.contains('menu-screen-hide')) {
                     MENU.screen.classList.add('menu-screen-hide')
-                    // setTimeout(() => {
-                    //     MENU.screen.style.display = "none"
-                    //     console.log('hey!!!!')
-                    // }, 3000)
                 }
                 if (GAME.isGameOver) {
                     GAME.RESET();
                 } else {
                     GAME.START();
+                }
+                if (area.classList.contains('area-inactive')) {
+                    area.classList.remove('area-inactive')
                 }
                 document.body.style.width = window.outerWidth
                 document.body.style.height = window.outerHeight

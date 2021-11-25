@@ -7,7 +7,6 @@ Done bonus time when one active(reset to initial doesnt stop when new bonusTime 
 start lvl - mode on: turn off the addinfo w addbonus
 bonus duration default time when gameOver -> NaN 
 check it in EDGE!
-API crossword game!
 Blinking fades h1 info
 gameover borderCollisionsOn!
 add GAME.STOP() -> clear clock, stop animationFunc -> when gameOver||resetBtn
@@ -22,3 +21,9 @@ Changing setTimeout removing animation to animationend_event (shost, blocks(cust
         }); 
 
 add mobile only horizontal mode, set up the document.body size 100vh x 100vw, mobile movement https://developers.google.com/web/fundamentals/native-hardware/device-orientation/
+
+idea:
+check if mobile, 
+move infos to gameArea-when game over blurred
+then only horizontal orient if not then ask to turn. 
+fill 100% on smaler screen
