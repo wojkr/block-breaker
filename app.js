@@ -1309,7 +1309,20 @@ function addInfo(timeOut, infoStart, infoStop = false, id = 0) {
         }
     }, fadeInAndOutDuration / 1.5)
 }
+// const deviceOrientationHandler = (e) => {
+//     console.log(e)
+//     console.log(e.alpha)
+//     console.log(e.acceleration)
 
+// }
+// if (window.DeviceOrientationEvent) {
+//     window.addEventListener('deviceorientation', deviceOrientationHandler, false);
+//     document.getElementById("doeSupported").innerText = "Supported!";
+// }
+window.addEventListener('deviceorientation', function (event) {
+    console.log(event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+    MENU.text.play.innerText = event.alpha + ' : ' + event.beta + ' : ' + event.gamma;
+});
 document.addEventListener('keydown', (e) => {
     let dir = keys[e.which];
 

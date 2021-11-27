@@ -23,7 +23,7 @@ Changing setTimeout removing animation to animationend_event (shost, blocks(cust
 add mobile only horizontal mode, set up the document.body size 100vh x 100vw, mobile movement https://developers.google.com/web/fundamentals/native-hardware/device-orientation/
 
 idea:
-check if mobile, 
-move infos to gameArea-when game over blurred
-then only horizontal orient if not then ask to turn. 
-fill 100% on smaler screen
+-check if mobile, 
+-move infos to gameArea-when game over b lurred
+-then only horizontal orient if not then ask to turn. //https://stackoverflow.com/questions/4917664/detect-viewport-orientation-if-orientation-is-portrait-display-alert-message-ad 
+-fill 100% on smaler screen
