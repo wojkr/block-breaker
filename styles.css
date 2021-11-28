@@ -71,10 +71,6 @@ body{
     transform: translate3d(-50%,-50%,0);
     transform-origin: center;
 }
-.area-inactive{
-    top:-1000px !important;
-    left:-1000px !important;
-}
 #game-container-left{
     box-shadow: inset 0 0 0px 1px #fff4, 0 0 10px 5px #fff4;
     border-radius: calc(var(--gameHeight)* var(--ballRadius) /2);
@@ -549,6 +545,46 @@ body{
 #menu-header-play{
  font-weight: 700; 
 }
+#btn-left,#btn-center,#btn-right,#btn-1,#btn-2,#btn-3,#btn-4,#btn-5{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 33vh;
+    width: 33vw;
+    border: solid 1px #0002;
+    outline: none;
+    background-color: #fff1;
+    display: grid;
+    place-items: center;
+    display: none;
+}
+#btn-center{
+    left: 33vw;
+    width: 34vw;
+}
+#btn-right{
+    left:unset;
+    right: 0;
+}
+#btn-1,#btn-2,#btn-3,#btn-4,#btn-5{
+    bottom:unset;
+    top:0;
+    height: 10vh;
+    width:20vw;
+}
+#btn-2{
+    left: 20vw;
+}
+#btn-3{
+    left: 40vw;
+}
+#btn-4{
+    left: 60vw;
+}
+#btn-5{
+    left: 80vw;
+}
+
 @keyframes hide{
     0%{opacity: 1;}
     100%{opacity: 0;}
@@ -598,4 +634,9 @@ body{
     .menu-text{
         font-size: smaller;
     }    
+}
+@media (min-width: 1px){
+    #btn-left,#btn-center,#btn-right,#btn-1,#btn-2,#btn-3,#btn-4,#btn-5{
+    display: grid
+    }
 }

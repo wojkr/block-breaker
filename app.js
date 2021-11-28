@@ -39,9 +39,6 @@ const MENU = {
         if (!MENU.screen.classList.contains('menu-screen-show')) {
             MENU.screen.classList.add('menu-screen-show')
         }
-        if (!area.classList.contains('area-inactive')) {
-            area.classList.add('area-inactive')
-        }
     },
     LISTEN: () => {
         MENU.btn.listeners.push(MENU.btn.start.addEventListener('click', () => {
@@ -62,17 +59,18 @@ const MENU = {
                 }
                 if (!MENU.screen.classList.contains('menu-screen-hide')) {
                     MENU.screen.classList.add('menu-screen-hide')
+                    // setTimeout(() => {
+                    //     MENU.screen.style.display = "none"
+                    //     console.log('hey!!!!')
+                    // }, 3000)
                 }
                 if (GAME.isGameOver) {
                     GAME.RESET();
                 } else {
                     GAME.START();
                 }
-                if (area.classList.contains('area-inactive')) {
-                    area.classList.remove('area-inactive')
-                }
-                document.body.style.width = window.outerWidth
-                document.body.style.height = window.outerHeight
+                // document.body.style.width = window.outerWidth
+                // document.body.style.height = window.outerHeight
                 console.log('hey!!!!')
             }, 5000)
         }))
@@ -270,7 +268,6 @@ const GAME = {
         BLOCKS.bonusToBlocksRatio = 0.5;
     },
     START: () => {
-        initialPosition();
         clock(100);
         GAME.RESET();
         startAnimating(100);
@@ -473,6 +470,7 @@ function saveSize(obj) {
 
 function reset(resetPoints = true, rows = GAME.levels[0].rows, columns = GAME.levels[0].columns, bonus = undefined, message = undefined) {//blockcontainet to 0,0; innerHtml in top poisition. game over when block container touches pad
     scale = 1;
+    console.log('create')
     area.style.transform = `translate3d(-50%,-50%,0) scale(${scale})`;
     GAME.mode[GAME.modeChosen].addPre ? GAME.mode[GAME.modeChosen].addPre() : GAME.modeClear();
     setGame();
@@ -492,8 +490,8 @@ function reset(resetPoints = true, rows = GAME.levels[0].rows, columns = GAME.le
     if (GAME.mode[GAME.modeChosen].addPost) {
         GAME.mode[GAME.modeChosen].addPost();
     }
-    document.body.style.height = `${window.outerHeight}px`
-    document.body.style.width = `${window.outerWidth}px`
+    // document.body.style.height = `${window.outerHeight}px`
+    // document.body.style.width = `${window.outerWidth}px`
 
 }
 function resetFull() {
@@ -544,6 +542,10 @@ function setBlocks(rows, columns) {
     BLOCKS.isHavingBonus = new Array(rows * columns).fill(undefined);
     BLOCKS.elements = createBlocks(rows, columns, GAME.levels[GAME.level].gapToBlockHeightRatio);
 }
+function setAreaScale(scale) {
+    area.style.transform = `translate3d(-50%,-50%,0) scale(${scale})`;
+}
+
 function setAreaSize() {
     if (xy.height(document.body) < 1200 || xy.width(document.body) < 1600) {
         if (xy.width(document.body) / xy.height(document.body) >= xy.width(area) / xy.height(area)) {
@@ -558,8 +560,8 @@ function setAreaSize() {
             scale = 1200 / xy.height(area);
         }
     }
-    scale *= 0.8;
-    area.style.transform = `translate3d(-50%,-50%,0) scale(${scale})`;
+    isTouchDevice ? scale *= 1 : scale *= 0.8;
+    setAreaScale(scale)
 }
 function addLevelInitial(bonus, message) {
     if (bonus) {
@@ -1309,6 +1311,7 @@ function addInfo(timeOut, infoStart, infoStop = false, id = 0) {
         }
     }, fadeInAndOutDuration / 1.5)
 }
+
 // const deviceOrientationHandler = (e) => {
 //     console.log(e)
 //     console.log(e.alpha)
@@ -1319,10 +1322,82 @@ function addInfo(timeOut, infoStart, infoStop = false, id = 0) {
 //     window.addEventListener('deviceorientation', deviceOrientationHandler, false);
 //     document.getElementById("doeSupported").innerText = "Supported!";
 // }
-window.addEventListener('deviceorientation', function (event) {
-    console.log(event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
-    MENU.text.play.innerText = event.alpha + ' : ' + event.beta + ' : ' + event.gamma;
-});
+// window.addEventListener('deviceorientation', function (event) {
+//     console.log(event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+//     MENU.text.play.innerText = Math.floor(event.alpha) + ' :b ' + Math.floor(event.beta) + ' :g ' + Math.floor(event.gamma);
+// });
+
+
+function checkIsTouchDevice() {
+    return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0));
+}
+let isTouchDevice = checkIsTouchDevice();
+
+function symulateKeyboard(isPressed, keyCode) {
+    let eventType = 'keyup'
+    if (isPressed) {
+        eventType = 'keydown'
+    }
+    document.dispatchEvent(new KeyboardEvent(eventType, { 'keyCode': keyCode }));
+}
+function createBtnForMobile(id, keyCode, innerHTML) {
+    const btn = createDiv(document.body, id);
+    btn.innerHTML = innerHTML;
+    btn.addEventListener('touchstart', (e) => {
+        console.log(id);
+        symulateKeyboard(true, keyCode);
+    })
+    btn.addEventListener('touchend', (e) => {
+        console.log(id + ' end');
+        symulateKeyboard(false, keyCode);
+    })
+    return btn
+}
+if (isTouchDevice) {
+    // alert('this game works best in landscape orientation');
+    const btnL = createBtnForMobile('btn-left', 37, '<-');//mobile buttons
+    const btnC = createBtnForMobile('btn-center', 32, '^');
+    const btnR = createBtnForMobile('btn-right', 39, '->');
+    const btn1 = createBtnForMobile('btn-1', 49, 'stop');//cheats buttons
+    const btn2 = createBtnForMobile('btn-2', 50, 'slow');
+    const btn3 = createBtnForMobile('btn-3', 51, 'normal');
+    const btn4 = createBtnForMobile('btn-4', 52, 'fast');
+    const btn5 = createBtnForMobile('btn-5', 53, 'spawn');
+
+
+    // const btnL = createDiv(document.body, 'btn-left')
+    // const btnC = createDiv(document.body, 'btn-center')
+    // const btnR = createDiv(document.body, 'btn-right')
+    // btnL.addEventListener('touchstart', (e) => {
+    //     console.log('left')
+    //     symulateKeyboard(true, 37)
+    // })
+    // btnL.addEventListener('touchend', (e) => {
+    //     console.log('left end')
+    //     symulateKeyboard(false, 37)
+    // })
+    // btnR.addEventListener('touchstart', (e) => {
+    //     console.log('right')
+    //     symulateKeyboard(true, 39)
+    // })
+    // btnR.addEventListener('touchend', (e) => {
+    //     console.log('right end')
+    //     symulateKeyboard(false, 39)
+    // })
+    // btnC.addEventListener('touchstart', (e) => {
+    //     console.log('space')
+    //     symulateKeyboard(true, 32)
+    // })
+    // btnC.addEventListener('touchend', (e) => {  
+    //     console.log('space end')
+    //     symulateKeyboard(false, 32)
+    // })
+}
+
+
+
 document.addEventListener('keydown', (e) => {
     let dir = keys[e.which];
 
@@ -1530,4 +1605,6 @@ function animate() {
         monitorShots();
     }
 }
+initialPosition(); /// setting the pad position 
+area.style.transform = `translate3d(-50%,-50%,0) scale(0.1)`; ///changing pad size - from default
 MENU.LISTEN();
