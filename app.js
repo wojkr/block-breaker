@@ -271,6 +271,7 @@ const GAME = {
         clock(100);
         GAME.RESET();
         startAnimating(100);
+        createScreenControls();
     },
     RESET: () => {
         reset(true, GAME.levels[0].rows, GAME.levels[0].columns, GAME.levels[0].bonus, GAME.levels[0].message)
@@ -547,6 +548,7 @@ function setAreaScale(scale) {
 }
 
 function setAreaSize() {
+    setAreaScale(1)
     if (xy.height(document.body) < 1200 || xy.width(document.body) < 1600) {
         if (xy.width(document.body) / xy.height(document.body) >= xy.width(area) / xy.height(area)) {
             scale = xy.height(document.body) / xy.height(area);
@@ -560,7 +562,7 @@ function setAreaSize() {
             scale = 1200 / xy.height(area);
         }
     }
-    isTouchDevice ? scale *= 1 : scale *= 0.8;
+    isTouchDevice ? scale *= 0.97 : scale *= 0.8;
     setAreaScale(scale)
 }
 function addLevelInitial(bonus, message) {
@@ -1355,47 +1357,25 @@ function createBtnForMobile(id, keyCode, innerHTML) {
     })
     return btn
 }
-if (isTouchDevice) {
-    // alert('this game works best in landscape orientation');
-    const btnL = createBtnForMobile('btn-left', 37, '<-');//mobile buttons
-    const btnC = createBtnForMobile('btn-center', 32, '^');
-    const btnR = createBtnForMobile('btn-right', 39, '->');
-    const btn1 = createBtnForMobile('btn-1', 49, 'stop');//cheats buttons
-    const btn2 = createBtnForMobile('btn-2', 50, 'slow');
-    const btn3 = createBtnForMobile('btn-3', 51, 'normal');
-    const btn4 = createBtnForMobile('btn-4', 52, 'fast');
-    const btn5 = createBtnForMobile('btn-5', 53, 'spawn');
-
-
-    // const btnL = createDiv(document.body, 'btn-left')
-    // const btnC = createDiv(document.body, 'btn-center')
-    // const btnR = createDiv(document.body, 'btn-right')
-    // btnL.addEventListener('touchstart', (e) => {
-    //     console.log('left')
-    //     symulateKeyboard(true, 37)
-    // })
-    // btnL.addEventListener('touchend', (e) => {
-    //     console.log('left end')
-    //     symulateKeyboard(false, 37)
-    // })
-    // btnR.addEventListener('touchstart', (e) => {
-    //     console.log('right')
-    //     symulateKeyboard(true, 39)
-    // })
-    // btnR.addEventListener('touchend', (e) => {
-    //     console.log('right end')
-    //     symulateKeyboard(false, 39)
-    // })
-    // btnC.addEventListener('touchstart', (e) => {
-    //     console.log('space')
-    //     symulateKeyboard(true, 32)
-    // })
-    // btnC.addEventListener('touchend', (e) => {  
-    //     console.log('space end')
-    //     symulateKeyboard(false, 32)
-    // })
+function createScreenControls() {
+    if (isTouchDevice) {
+        const btnL = createBtnForMobile('btn-left', 37, '<-');//mobile buttons
+        const btnC = createBtnForMobile('btn-center', 32, '^');
+        const btnR = createBtnForMobile('btn-right', 39, '->');
+        const btn1 = createBtnForMobile('btn-1', 49, 'stop');//cheats buttons
+        const btn2 = createBtnForMobile('btn-2', 50, 'slow');
+        const btn3 = createBtnForMobile('btn-3', 51, 'normal');
+        const btn4 = createBtnForMobile('btn-4', 52, 'fast');
+        const btn5 = createBtnForMobile('btn-5', 53, 'spawn');
+    }
 }
-
+window.addEventListener("orientationchange", function () {
+    console.log(window.orientation === 0 ? 'veritcal view mode' : 'horizontal view mode')
+    if (xy.width(area) > 200) {
+        setAreaScale(0.1)
+        setTimeout(() => { setAreaSize() }, 100)
+    }
+});
 
 
 document.addEventListener('keydown', (e) => {
@@ -1467,6 +1447,7 @@ INFO.btnReset.addEventListener('click', () => {
 });
 
 function goToMenu() {
+    area.style.transform = `translate3d(-50%,-50%,0) scale(0.1)`; ///hiding game area
     GAME.isGameOver = true;
     if (INFO.element.classList.contains('bonus-time-animation')) {
         INFO.element.classList.remove('bonus-time-animation');
