@@ -470,9 +470,9 @@ function saveSize(obj) {
 }
 
 function reset(resetPoints = true, rows = GAME.levels[0].rows, columns = GAME.levels[0].columns, bonus = undefined, message = undefined) {//blockcontainet to 0,0; innerHtml in top poisition. game over when block container touches pad
-    scale = 1;
+    GAME.scale = 1;
     console.log('create')
-    area.style.transform = `translate3d(-50%,-50%,0) scale(${scale})`;
+    area.style.transform = `translate3d(-50%,-50%,0) scale(${GAME.scale})`;
     GAME.mode[GAME.modeChosen].addPre ? GAME.mode[GAME.modeChosen].addPre() : GAME.modeClear();
     setGame();
     if (resetPoints) {
@@ -551,19 +551,19 @@ function setAreaSize() {
     setAreaScale(1)
     if (xy.height(document.body) < 1200 || xy.width(document.body) < 1600) {
         if (xy.width(document.body) / xy.height(document.body) >= xy.width(area) / xy.height(area)) {
-            scale = xy.height(document.body) / xy.height(area);
+            GAME.scale = xy.height(document.body) / xy.height(area);
         } else {
-            scale = xy.width(document.body) / xy.width(area);
+            GAME.scale = xy.width(document.body) / xy.width(area);
         }
     } else {
         if (1200 / xy.height(area) > 1600 / xy.width(area)) {
-            scale = 1600 / xy.width(area);
+            GAME.scale = 1600 / xy.width(area);
         } else {
-            scale = 1200 / xy.height(area);
+            GAME.scale = 1200 / xy.height(area);
         }
     }
-    isTouchDevice ? scale *= 0.97 : scale *= 0.8;
-    setAreaScale(scale)
+    isTouchDevice ? GAME.scale *= 0.97 : GAME.scale *= 0.8;
+    setAreaScale(GAME.scale)
 }
 function addLevelInitial(bonus, message) {
     if (bonus) {
@@ -621,7 +621,7 @@ function createBlocks(rowsNumber, inRow, gapToblockHeightRatio = 1) {//1 gapY=1 
     BLOCKS.height = xy.height(block[0]);
     let gapX = ((500 - 2 * BLOCKS.container.margin.x) / inRow - BLOCKS.width) * inRow / (inRow - 1);
     let gapY = gapToblockHeightRatio * BLOCKS.height;
-    if (gapX > xy.width(BALL.element) / scale * 1.8) {
+    if (gapX > xy.width(BALL.element) / GAME.scale * 1.8) {
         let rowNubmer = rowsNumber;
         for (let i = 1; i < rowsNumber * inRow; i++) {
             block[i] = document.createElement('div');
@@ -738,7 +738,7 @@ function ballBlockCollision(ball, block, COR, type) {
 }
 
 function setStyleTop(b) {
-    b.style.top = `${xy.top(b) / scale - xy.top(GAME.element) / scale}px`;
+    b.style.top = `${xy.top(b) / GAME.scale - xy.top(GAME.element) / GAME.scale}px`;
     b.style.animation = 'none';
 }
 
@@ -908,7 +908,7 @@ const xy = {
 
 
 function blocksPadCollision() {
-    if (parseInt(PAD.element.style.top) < parseInt(BLOCKS.container.element.style.top) + parseInt(BLOCKS.elements[BLOCKS.elements.length - 1].style.top) + BLOCKS.height / scale) {
+    if (parseInt(PAD.element.style.top) < parseInt(BLOCKS.container.element.style.top) + parseInt(BLOCKS.elements[BLOCKS.elements.length - 1].style.top) + BLOCKS.height / GAME.scale) {
         gameOver('lost')
     }
 }
@@ -952,8 +952,8 @@ function sendBonus(block, bonusId = 0) {
     bonusSent.classList.add(`bonus-${block.getAttribute('bonus')}`)
     setBonusColor(bonusSent);
     GAME.element.appendChild(bonusSent);
-    bonusSent.style.top = `${parseInt(getComputedStyle(block).top) + BLOCKS.container.margin.y + BLOCKS.height / 2 / scale - parseInt(getComputedStyle(bonusSent).height) / 2}px`;
-    bonusSent.style.left = `${(xy.left(BLOCKS.container.element) - GAME.left) / scale + parseInt(getComputedStyle(block).left) + BLOCKS.width / 2 / scale - parseInt(getComputedStyle(bonusSent).width) / 2}px`;
+    bonusSent.style.top = `${parseInt(getComputedStyle(block).top) + BLOCKS.container.margin.y + BLOCKS.height / 2 / GAME.scale - parseInt(getComputedStyle(bonusSent).height) / 2}px`;
+    bonusSent.style.left = `${(xy.left(BLOCKS.container.element) - GAME.left) / GAME.scale + parseInt(getComputedStyle(block).left) + BLOCKS.width / 2 / GAME.scale - parseInt(getComputedStyle(bonusSent).width) / 2}px`;
     bonusSent.classList.add('bonus-animation');
     BONUSES.timeOutHandles.push([setTimeout(() => {
         if (BONUSES.elements != []) {
@@ -1221,10 +1221,13 @@ function sendShot() {
         shot.classList.add('shot');
         GAME.element.appendChild(shot);
         shot.classList.add('shot-animation');
-        shot.style.top = `${(PAD.top - GAME.top) / scale}px`;
-        shot.style.left = `${GAME.width / scale / 2 - parseInt(getComputedStyle(shot).width) / 2 + PAD.x}px`;
+        shot.style.top = `${(PAD.top - GAME.top) / GAME.scale}px`;
+        shot.style.left = `${GAME.width / GAME.scale / 2 - parseInt(getComputedStyle(shot).width) / 2 + PAD.x}px`;
         BONUSES.shots.elements.push(shot);
         BONUSES.shots.isAlive.push(1);
+        console.log('scale: ', GAME.scale);
+        console.log()
+        // console.log('px,py: ', Math.floor(xy.xAvg(PAD.element)), Math.floor(xy.yAvg(PAD.element)), ' sx,sy: ', Math.floor(xy.xAvg(shot)), Math.floor(xy.yAvg(shot)))
         BONUSES.shots.timeOutHandles.push(setTimeout(() => {
             BONUSES.shots.elements.shift()
             BONUSES.shots.timeOutHandles.shift()
@@ -1370,10 +1373,15 @@ function createScreenControls() {
     }
 }
 window.addEventListener("orientationchange", function () {
-    console.log(window.orientation === 0 ? 'veritcal view mode' : 'horizontal view mode')
+    console.log(window.orientation === 0 ? 'veritcal view mode' : 'horizontal view mode');
     if (xy.width(area) > 200) {
-        setAreaScale(0.1)
-        setTimeout(() => { setAreaSize() }, 100)
+        setAreaScale(0.1);
+        setTimeout(() => {
+            setAreaScale(1);
+            initialPosition();
+            setAreaSize();
+            saveSize(GAME);
+        }, 100);
     }
 });
 
@@ -1463,8 +1471,8 @@ function place_pad() {
 function padMovement() {
     const held_direction = GAME.held_directions[0];
     if (held_direction && !GAME.isGameOver) {
-        if (held_direction === directions.right && PAD.x < GAME.border.x - PAD.width / scale / 2 - PAD.speed) { PAD.x += PAD.speed; }
-        if (held_direction === directions.left && -PAD.x < GAME.border.x - PAD.width / scale / 2 - PAD.speed) { PAD.x -= PAD.speed; }
+        if (held_direction === directions.right && PAD.x < GAME.border.x - PAD.width / GAME.scale / 2 - PAD.speed) { PAD.x += PAD.speed; }
+        if (held_direction === directions.left && -PAD.x < GAME.border.x - PAD.width / GAME.scale / 2 - PAD.speed) { PAD.x -= PAD.speed; }
     }
     PAD.element.style.transform = `translate3d(${PAD.x}px,${PAD.y}px,0)`;
     saveSize(PAD);
@@ -1477,7 +1485,7 @@ function bonusPadCollisions() {
                     b.setAttribute('isAdded', true);
                     let bonusId = b.getAttribute('id');
                     addBonus(b.getAttribute('type'), bonusId);
-                    b.style.top = `${xy.top(b) / scale - GAME.top / scale}px`;
+                    b.style.top = `${xy.top(b) / GAME.scale - GAME.top / GAME.scale}px`;
                     b.classList.remove('bonus-animation');
                     addAndRemoveClass(b, 'bonus-dead', BLOCKS.animation.duration.hitted);
                     setTimeout(() => {
