@@ -51,6 +51,7 @@ const MENU = {
             MENU.btn.play.removeEventListener('click', MENU.btn.listeners[3]);
             MENU.btn.mode.removeEventListener('click', MENU.btn.listeners[4]);
             setTimeout(() => {
+                document.body.style.overflow = "auto"
                 MENU.text.play.style.display = 'none';
                 MENU.text.start.style.display = 'none';
                 MENU.container.style.justifyContent = 'center';
@@ -59,18 +60,15 @@ const MENU = {
                 }
                 if (!MENU.screen.classList.contains('menu-screen-hide')) {
                     MENU.screen.classList.add('menu-screen-hide')
-                    // setTimeout(() => {
-                    //     MENU.screen.style.display = "none"
-                    //     console.log('hey!!!!')
-                    // }, 3000)
                 }
                 if (GAME.isGameOver) {
                     GAME.RESET();
                 } else {
                     GAME.START();
                 }
-                // document.body.style.width = window.outerWidth
-                // document.body.style.height = window.outerHeight
+                setTimeout(() => {
+                    document.body.style.overflow = "hidden"///refreshing styles
+                }, 100)
                 console.log('hey!!!!')
             }, 5000)
         }))
@@ -1362,14 +1360,14 @@ function createBtnForMobile(id, keyCode, innerHTML) {
 }
 function createScreenControls() {
     if (isTouchDevice) {
-        const btnL = createBtnForMobile('btn-left', 37, '<-');//mobile buttons
-        const btnC = createBtnForMobile('btn-center', 32, '^');
-        const btnR = createBtnForMobile('btn-right', 39, '->');
         const btn1 = createBtnForMobile('btn-1', 49, 'stop');//cheats buttons
         const btn2 = createBtnForMobile('btn-2', 50, 'slow');
         const btn3 = createBtnForMobile('btn-3', 51, 'normal');
         const btn4 = createBtnForMobile('btn-4', 52, 'fast');
         const btn5 = createBtnForMobile('btn-5', 53, 'spawn');
+        const btnL = createBtnForMobile('btn-left', 37, '<-');//mobile buttons
+        const btnC = createBtnForMobile('btn-center', 32, '^');
+        const btnR = createBtnForMobile('btn-right', 39, '->');
     }
 }
 window.addEventListener("orientationchange", function () {

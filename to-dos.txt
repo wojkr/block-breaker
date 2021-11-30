@@ -24,6 +24,6 @@ add mobile only horizontal mode, set up the document.body size 100vh x 100vw, mo
 
 idea:
 -check if mobile, 
--move infos to gameArea-when game over b lurred
+-move infos to gameArea-when game over blurred
 -then only horizontal orient if not then ask to turn. //https://stackoverflow.com/questions/4917664/detect-viewport-orientation-if-orientation-is-portrait-display-alert-message-ad 
 -fill 100% on smaler screen
