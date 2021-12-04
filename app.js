@@ -1223,8 +1223,6 @@ function sendShot() {
         shot.style.left = `${GAME.width / GAME.scale / 2 - parseInt(getComputedStyle(shot).width) / 2 + PAD.x}px`;
         BONUSES.shots.elements.push(shot);
         BONUSES.shots.isAlive.push(1);
-        console.log('scale: ', GAME.scale);
-        console.log()
         // console.log('px,py: ', Math.floor(xy.xAvg(PAD.element)), Math.floor(xy.yAvg(PAD.element)), ' sx,sy: ', Math.floor(xy.xAvg(shot)), Math.floor(xy.yAvg(shot)))
         BONUSES.shots.timeOutHandles.push(setTimeout(() => {
             BONUSES.shots.elements.shift()
@@ -1347,6 +1345,7 @@ function symulateKeyboard(isPressed, keyCode) {
 }
 function createBtnForMobile(id, keyCode, innerHTML) {
     const btn = createDiv(document.body, id);
+    btn.classList.add('mobile-btn')
     btn.innerHTML = innerHTML;
     btn.addEventListener('touchstart', (e) => {
         console.log(id);
