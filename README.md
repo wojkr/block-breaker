@@ -21,5 +21,5 @@ Currently the game contains:
 * VanillaJS, 
 * CSS.
 
-# Getting Started with react-crud-website App
+# Getting Started with block-breaker App
 Just open __index.html__ in your browser
