@@ -22,6 +22,8 @@ Changing setTimeout removing animation to animationend_event (shost, blocks(cust
 
 add mobile only horizontal mode, set up the document.body size 100vh x 100vw, mobile movement https://developers.google.com/web/fundamentals/native-hardware/device-orientation/
 
+
+CHECK SHOT INITIAL POSITION WHEN CHANGED DEVICE ORIENTATION
 idea:
 -check if mobile, 
 -move infos to gameArea-when game over blurred

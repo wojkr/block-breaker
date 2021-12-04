@@ -537,6 +537,10 @@ body{
     font-size: 1rem;
     font-style: italic;
     letter-spacing: 1rem;
+    text-decoration: none;
+}
+#menu-title-highlited-3:hover{
+    text-decoration: underline;
 }
 #menu-title-highlited-1{
     color: #900;

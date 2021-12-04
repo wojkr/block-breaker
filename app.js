@@ -1378,6 +1378,8 @@ window.addEventListener("orientationchange", function () {
             initialPosition();
             setAreaSize();
             saveSize(GAME);
+            // saveSize(PAD);
+            console.log('saved')
         }, 100);
     }
 });
