@@ -295,6 +295,7 @@ const INFO = {
     level: document.getElementById('game-level'),
     points: document.getElementById('game-points'),
     btnReset: document.getElementById('game-btn-reset'),
+    btnPause: document.getElementById('game-btn-pause'),
     default: 'Break All The Blocks!',
 }
 
@@ -695,6 +696,8 @@ function ballBlockCollision(ball, block, COR, type) {
                 dmg = 1;
                 BONUSES.shots.isAlive[BONUSES.shots.elements.indexOf(ball)] -= 1;
                 setStyleTop(ball);
+                ball.style.left = `${(Math.random() - 0.5) * 10 * GAME.scale + Number(ball.style.left.slice(0, -2))}px`
+                // console.log(BONUSES.shots.elements.indexOf(ball).left)
                 // ball.style.animationPlayState = 'paused';
                 // changeThis//to from paused to removing classes and setting up top position
                 ballState = 'shot-hitted'
@@ -1449,6 +1452,9 @@ document.addEventListener('keyup', (e) => {
 
 INFO.btnReset.addEventListener('click', () => {
     goToMenu();
+});
+INFO.btnPause.addEventListener('click', () => {
+    PAUSED();
 });
 
 function goToMenu() {

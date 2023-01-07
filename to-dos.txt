@@ -29,3 +29,8 @@ idea:
 -move infos to gameArea-when game over blurred
 -then only horizontal orient if not then ask to turn. //https://stackoverflow.com/questions/4917664/detect-viewport-orientation-if-orientation-is-portrait-display-alert-message-ad 
 -fill 100% on smaler screen
+
+
+PAUSED and RUN TO BE FINISHED!!
+
+MOVE PAUSED AND RUN AS GAME.RUN etc

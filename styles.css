@@ -361,7 +361,7 @@ body{
     100%{transform: translate3d(calc(var(--moving)/ -2),calc(var(--movingDown)),0)}
 }
 
-#game-btn-reset{
+#game-btn-reset,#game-btn-pause{
     outline: none;
     background-color: transparent;
     border: 3px solid #000;
@@ -374,14 +374,14 @@ body{
     cursor: pointer;
     text-align: center;
 }
-#game-btn-reset:hover{
+#game-btn-reset:hover,#game-btn-pause:hover{
     text-shadow: 0 0 0.2rem #fff;
     box-shadow: inset 0 0 0.2rem #fff, 0 0 0.2rem #fff;
     color: #fff;
     border-color: #fff;
     transition: 0.3s;
 }
-.show-btn-reset{
+.show-btn-reset,.show-btn-pause{
     display: block !important;
 }
 
