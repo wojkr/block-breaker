@@ -101,7 +101,7 @@ body{
     top: calc(var(--gameHeight)* var(--padTopHit)) !important;
     box-shadow: 0 calc(var(--gameHeight)* var(--padHeight)*0.4) calc(var(--gameHeight)* var(--padHeight)) #fff7, 0 0 calc(var(--gameHeight)* var(--padHeight)) #000, 0 calc(var(--gameHeight)* var(--padHeight)/ 2) calc(var(--gameHeight)* var(--padHeight)* 2.5) #000 !important;
 }
-#game-info {
+.game-info{
     text-align: center;
     margin-bottom: 1rem;
 }

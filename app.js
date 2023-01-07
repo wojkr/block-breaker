@@ -69,7 +69,6 @@ const MENU = {
                 setTimeout(() => {
                     document.body.style.overflow = "hidden"///refreshing styles
                 }, 100)
-                console.log('hey!!!!')
             }, 5000)
         }))
         MENU.btn.listeners.push(MENU.btn.about.addEventListener('click', () => {
@@ -284,7 +283,7 @@ const GAME = {
 
 //INFOS
 const INFO = {
-    element: document.getElementById('game-info'),
+    element: checkIsTouchDevice ? document.getElementById('game-info-mobile') : document.getElementById('game-info-desktop'),
     bonus: {
         element: document.getElementById('bonus'),
         duration: document.getElementById('bonus-duration'),
@@ -1409,7 +1408,6 @@ document.addEventListener('keydown', (e) => {
             sendShot();
         }
     }
-
     if (e.which == 32 && GAME.isGameStarted == false && GAME.isGameOver == false) {
         GAME.isGameStarted = true;
         BALL.isBallSticky = false;
