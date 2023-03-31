@@ -1,25 +1,22 @@
-# block-breaker
+# Block-Breaker
+
 by [wojKr](https://github.com/wojkr)
 
-Game built from the scratch. _CSS_ and _VanillaJS_. 
-_Almost ready._
-[live version - have a try :)](https://wojkr.github.io/block-breaker)
-
-[Contact Me](mailto:test.wojkr@gmail.com?subject=[GitHub]%20React%20Crud%20Website)
+Block-Breaker is a simple game built from scratch using VanillaJS and CSS. It features 10 levels, 11 bonuses, 7 game modes, and control buttons for touchscreen devices. Check out the live version [here](https://wojkr.github.io/block-breaker).
 
 ## Overview
-### Description
-First project I have done. 
-From time to time I come back to it and improve a little bit, step by step. I want to clean the code, optimaize it a bit, add some levels.
-Currently the game contains: 
-* 10 different levels,
-* 11 bonuses,
-* 7 game modes,
-* Control buttons for touchscreen devices. 
 
-### Technologies
-* VanillaJS, 
-* CSS.
+This was my first project and I keep coming back to it to improve it a little bit at a time. My current goals for the project include cleaning up the code, optimizing it, and adding more levels.
 
-# Getting Started with block-breaker App
-Just open __index.html__ in your browser
+## Technologies
+
+- VanillaJS
+- CSS
+
+## Getting Started
+
+To get started with the block-breaker app, simply open `index.html` in your web browser.
+
+## Contact Me
+
+If you have any questions or feedback, feel free to [contact me](mailto:test.wojkr@gmail.com?subject=[GitHub]%20React%20Crud%20Website).
