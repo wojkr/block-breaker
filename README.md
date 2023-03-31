@@ -1,7 +1,6 @@
 # Block-Breaker
 
 by [wojKr](https://github.com/wojkr)
-
 Block-Breaker is a simple game built from scratch using VanillaJS and CSS. It features 10 levels, 11 bonuses, 7 game modes, and control buttons for touchscreen devices. Check out the live version [here](https://wojkr.github.io/block-breaker).
 
 ## Overview
