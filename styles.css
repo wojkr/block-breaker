@@ -61,7 +61,7 @@
 
 body{
     background-color: var(--background-color);
-    min-height: 100vh;
+    height: 100dvh;
     overflow: hidden;
 }
 #game-area{
@@ -434,7 +434,7 @@ body{
     left:0;
     background-color: var(--background-color);
     background-image: linear-gradient(#fff1,#0004),radial-gradient(#fff6 2%, #fff0 90%);
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     z-index: 100 ;
     display: grid;
