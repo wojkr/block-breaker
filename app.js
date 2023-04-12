@@ -1,32 +1,35 @@
+// Function to check if the device supports touch events
 function checkIsTouchDevice() {
     return (('ontouchstart' in window) ||
         (navigator.maxTouchPoints > 0) ||
         (navigator.msMaxTouchPoints > 0));
 }
-let isTouchDevice = checkIsTouchDevice();
+let isTouchDevice = checkIsTouchDevice();// Check if the device is a touch device and store the result in a variable
 
 const MENU = {
-    screen: document.getElementById('menu-screen-div'),
-    container: document.getElementsByClassName('container')[0],
+     // Elements in the menu screen
+    screen: document.getElementById('menu-screen-div'), // Menu screen div element
+    container: document.getElementsByClassName('container')[0], // Container element
     btn: {
-        start: document.getElementById('menu-btn-start'),
-        play: document.getElementById('menu-btn-play'),
-        mode: document.getElementById('menu-btn-mode'),
-        about: document.getElementById('menu-btn-about'),
-        back: document.getElementById('menu-btn-back'),
-        listeners: [],
+        start: document.getElementById('menu-btn-start'), // Start button element
+        play: document.getElementById('menu-btn-play'),// Play button element
+        mode: document.getElementById('menu-btn-mode'), // Mode button element
+        about: document.getElementById('menu-btn-about'), // About button element
+        back: document.getElementById('menu-btn-back'),// Back button element
+        listeners: [], // Array to store event listeners for buttons
     },
     text: {
-        start: document.getElementById('menu-text-start'),
-        play: document.getElementById('menu-text-play'),
-        about: document.getElementById('menu-text-about'),
-        mode: {
-            h: document.getElementById('menu-header-play'),
-            p: document.getElementById('menu-p-play'),
+        start: document.getElementById('menu-text-start'),// Start text element
+        play: document.getElementById('menu-text-play'),// Play text element
+        about: document.getElementById('menu-text-about'),// About text element
+        mode: {  
+            h: document.getElementById('menu-header-play'),// Mode header element
+            p: document.getElementById('menu-p-play'), // Mode info paragraph element
         },
     },
     ul: document.getElementsByClassName('menu-ul')[0],
     INITIAL: () => {
+          // Function to set initial state of the menu
         MENU.btn.play.style.display = 'block';
         MENU.btn.about.style.display = 'block';
         MENU.btn.mode.style.display = 'none';
@@ -39,6 +42,7 @@ const MENU = {
         MENU.container.style.justifyContent = 'space-between';
     },
     SHOW: () => {
+           // Function to show the menu screen
         if (MENU.screen.classList.contains('menu-screen-hide')) {
             MENU.screen.classList.remove('menu-screen-hide');
             MENU.INITIAL();
@@ -48,7 +52,9 @@ const MENU = {
         }
     },
     LISTEN: () => {
+        //CLicked Start button => loading screen + start game
         MENU.btn.listeners.push(MENU.btn.start.addEventListener('click', () => {
+             // Clear the menu
             MENU.text.start.style.display = 'block';
             MENU.text.mode.p.style.display = 'none';
             MENU.ul.style.display = 'none';
@@ -57,35 +63,43 @@ const MENU = {
             MENU.btn.back.removeEventListener('click', MENU.btn.listeners[2]);
             MENU.btn.play.removeEventListener('click', MENU.btn.listeners[3]);
             MENU.btn.mode.removeEventListener('click', MENU.btn.listeners[4]);
+              // Loading screen
             setTimeout(() => {
                 document.body.style.overflow = "auto"
                 MENU.text.play.style.display = 'none';
                 MENU.text.start.style.display = 'none';
                 MENU.container.style.justifyContent = 'center';
+
+                // Remove menu-screen-show class and add menu-screen-hide class for screen animation
                 if (MENU.screen.classList.contains('menu-screen-show')) {
                     MENU.screen.classList.remove('menu-screen-show')
                 }
                 if (!MENU.screen.classList.contains('menu-screen-hide')) {
                     MENU.screen.classList.add('menu-screen-hide')
                 }
+                  // Reset or start game based on game over status
                 if (GAME.isGameOver) {
                     GAME.RESET();
                 } else {
                     GAME.START();
                 }
+                 // Set timeout to refresh styles after 100 milliseconds
                 setTimeout(() => {
-                    document.body.style.overflow = "hidden"///refreshing styles
+                    document.body.style.overflow = "hidden"
                 }, 100)
             }, 5000)
         }))
+        //Show About section
         MENU.btn.listeners.push(MENU.btn.about.addEventListener('click', () => {
             MENU.btn.about.style.display = 'none';
             MENU.text.about.style.display = 'block';
             MENU.btn.back.style.display = 'block';
         }))
+        //Go back to Main Menu 
         MENU.btn.listeners.push(MENU.btn.back.addEventListener('click', () => {
             MENU.INITIAL();
         }))
+        //Go to choose game mode
         MENU.btn.listeners.push(MENU.btn.play.addEventListener('click', () => {
             MENU.text.about.style.display = 'none';
             MENU.text.mode.p.style.display = 'block';
@@ -100,6 +114,7 @@ const MENU = {
             MENU.text.mode.h.innerHTML = GAME.mode[GAME.modeChosen].name;
             MENU.text.mode.p.innerHTML = GAME.mode[GAME.modeChosen].info;
         }))
+        //Change game mode
         MENU.btn.listeners.push(MENU.btn.mode.addEventListener('click', () => {
             GAME.modeChosen++;
             GAME.modeChosen %= GAME.mode.length;
@@ -112,7 +127,7 @@ const MENU = {
 
 // let aniId = 0;
 
-
+//Helping function to create div and set id;
 function createDiv(parent, id) {
     const div = document.createElement('div');
     div.setAttribute('id', `${id}`)
@@ -124,6 +139,7 @@ const area = document.getElementById('game-area');
 
 //GAME
 const GAME = {
+//describing games state
     element: document.getElementById('game-container-left'),
     width: 0,
     height: 0,
@@ -150,6 +166,7 @@ const GAME = {
         bottom: 0,
     },
     level: 0,
+    //levels description 
     levels: [
         {
             rows: 3,
@@ -230,6 +247,7 @@ const GAME = {
             boss: true,
         },
     ],
+    //mode description 
     mode: [
         {
             name: 'Classic',
@@ -267,6 +285,7 @@ const GAME = {
         },
     ],
     modeChosen: 0,
+    //-----------------------------FUCTIONS
     modeClear: () => {
         GAME.cheats = false;
         BLOCKS.bonusToBlocksRatio = 0.5;
@@ -288,9 +307,12 @@ const GAME = {
     },
 }
 
-//INFOS
+//--------------------INFOS section - text for UI
+// Bonding elements to JS
 const INFO = {
+      // Represents the main game info element, retrieved based on whether teh device is a touch device or not
     element: isTouchDevice ? document.getElementById('game-info-mobile') : document.getElementById('game-info-desktop'),
+    // the bonus info table
     bonus: {
         element: document.getElementById('bonus'),
         duration: document.getElementById('bonus-duration'),
@@ -299,15 +321,17 @@ const INFO = {
             time: document.getElementById('bonus-info-list-time'),
         },
     },
+    //above table info:
     level: document.getElementById('game-level'),
     points: document.getElementById('game-points'),
+    //control buttons
     btnReset: document.getElementById('game-btn-reset'),
     btnPause: document.getElementById('game-btn-pause'),
     default: 'Break All The Blocks!',
 }
 console.log(isTouchDevice, INFO.element)
 
-//PAD
+//PAD config
 const PAD = {
     element: createDiv(GAME.element, 'pad'),
     x: 0,
@@ -322,7 +346,7 @@ const PAD = {
     yAvg: 0,
 }
 
-//BALL
+//BALL config
 const BALL = {
     element: createDiv(GAME.element, 'ball'),
     width: 0,
@@ -361,7 +385,7 @@ const BALL = {
     },
 }
 
-//BLOCKS
+//BLOCKS config
 const BLOCKS = {
     elements: [],
     width: 0,
@@ -428,7 +452,7 @@ const BLOCKS = {
     bonusToBlocksRatio: 0.14,
 }
 
-//BONUSES
+//BONUSES config
 const BONUSES = {
     elements: [],
     width: 0,
@@ -525,7 +549,7 @@ function resetFull() {
 function setGame() {
     GAME.isGameStarted = false;
     GAME.isGameOver = false;
-    GAME.element.style.filter = '';
+    BLOCKS.container.element.style.filter='';
     GAME.held_directions = [];
 }
 function setBall() {
@@ -877,7 +901,7 @@ function gameOver(lostOrWon) {
     BLOCKS.container.element.style.animationPlayState = 'paused'
     if (lostOrWon == 'lost') {
         GAME.isLost = true;
-        GAME.element.style.filter = 'blur(10px) contrast(2) brightness(1)';
+        BLOCKS.container.element.style.filter = 'blur(10px) contrast(2) brightness(1)';
         addInfo(false, `You lost! Game Over! You scored ${GAME.points} points.`)
         removeAllSendedBonuses();
         removeAllShots();
@@ -1348,16 +1372,42 @@ function symulateKeyboard(isPressed, keyCode) {
     }
     document.dispatchEvent(new KeyboardEvent(eventType, { 'keyCode': keyCode }));
 }
-function createBtnForMobile(id, keyCode, innerHTML) {
+
+const generateRandLightColor=()=>{
+    const h=Math.floor(Math.random()*360);
+    const l=75;
+    const s=100;
+    const a=40;
+    return `hsla(${h}deg ${s}% ${l}% / ${a}%)`
+}
+function createBtnForMobile(id, keyCode, innerHTML,src=false) {
     const btn = createDiv(document.body, id);
     btn.classList.add('mobile-btn')
-    btn.innerHTML = innerHTML;
+    if(!src){
+        btn.innerHTML = innerHTML;
+    }else{
+        const img = document.createElement('img');
+        img.setAttribute('id', `${id}-img`)
+        // img.classList.add("btn-img")
+        img.src=src;
+        btn.appendChild(img);
+        img.addEventListener('touchstart', (e) => {
+            e.preventDefault()
+            btn.style.backgroundColor=generateRandLightColor();
+        })
+        img.addEventListener('touchend', (e) => {
+            btn.style.backgroundColor="#fff1";
+        })
+    }
     btn.addEventListener('touchstart', (e) => {
-        console.log(id);
+        e.preventDefault()
+        btn.style.backgroundColor=generateRandLightColor();
+        // console.log(id);
         symulateKeyboard(true, keyCode);
     })
     btn.addEventListener('touchend', (e) => {
-        console.log(id + ' end');
+        btn.style.backgroundColor="#fff1";
+        // console.log(id + ' end');
         symulateKeyboard(false, keyCode);
     })
     return btn
@@ -1369,9 +1419,10 @@ function createScreenControls() {
         const btn3 = createBtnForMobile('btn-3', 51, 'normal');
         const btn4 = createBtnForMobile('btn-4', 52, 'fast');
         const btn5 = createBtnForMobile('btn-5', 53, 'spawn');
-        const btnL = createBtnForMobile('btn-left', 37, '<-');//mobile buttons
-        const btnC = createBtnForMobile('btn-center', 32, '^');
-        const btnR = createBtnForMobile('btn-right', 39, '->');
+        const btnL = createBtnForMobile('btn-left', 37, '<-',"arrows/left.png");//mobile buttons
+        const btnC = createBtnForMobile('btn-center', 32, '^',"arrows/up.png");
+        const btnR = createBtnForMobile('btn-right', 39, '->',"arrows/right.png");
+        // const btnR = createBtnForMobile('btn-right', 39, '->');
     }
 }
 window.addEventListener("orientationchange", function () {
