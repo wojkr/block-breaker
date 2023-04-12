@@ -1,3 +1,10 @@
+function checkIsTouchDevice() {
+    return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0));
+}
+let isTouchDevice = checkIsTouchDevice();
+
 const MENU = {
     screen: document.getElementById('menu-screen-div'),
     container: document.getElementsByClassName('container')[0],
@@ -219,43 +226,43 @@ const GAME = {
             rows: 1,
             columns: 1,
             bonus: undefined,
-            message: 'There is only one more!',
+            message: 'There is only one more left!',
             boss: true,
         },
     ],
     mode: [
         {
-            name: 'classic',
-            info: 'Simple block breaker game. 10lvl, 11bonuses',
+            name: 'Classic',
+            info: 'That is a simple block breaker game! Enjoy 10 levels and 11 bonuses!',
         },
         {
-            name: 'crazyBallSurvival',
-            info: 'The ball is alive and wants you to lose!',
+            name: 'Crazy Ball Survival',
+            info: 'The ball is alive and ready to challenge you! Can you dodge its moves and win the game?',
             addPost: () => { BALL.isBallCrazy = true; BONUSES.timeLeft[BONUSES.types.indexOf('crazyBall')] = 'endless'; },
         },
         {
-            name: 'extraBonuses',
-            info: 'Waiting for Xmass gifts!? Here you are.',
+            name: 'Extra Bonuses',
+            info: 'Waiting for Xmas gifts? Look no further! Enjoy extra bonuses in the game!',
             addPre: () => { BLOCKS.bonusToBlocksRatio = 0.5; },
         },
         {
-            name: 'cheat',
-            info: 'Press magic keys to relase bonuses: 1,2,3,4-change ball speed, 5-spawn ball in top area of game, space- shot.',
+            name: 'Cheat',
+            info: 'Use the following keys for extra moves: 1, 2, 3, 4 - change ball speed, 5 - place the ball in the top area of the game, and space - shoot!',
             addPre: () => { GAME.cheats = true },
         },
         {
-            name: 'endlessBonuses',
-            info: 'Once you get it, it stays. ',
+            name: 'Endless Bonuses',
+            info: 'Get ready for an endless bonus bonanza! Once you grab a bonus, it is yours to keep and enjoy throughout the game!',
             addPost: () => { BONUSES.time.default = 'endless'; },
         },
         {
-            name: 'allBonuses',
-            info: 'You have them at once. ',
+            name: 'All Bonuses',
+            info: 'Supercharge your gameplay with all bonuses at once! Get ready for an action-packed adventure!',
             addPost: () => { BONUSES.timeLeft = new Array(BONUSES.timeLeft.length).fill('endless'); BONUSES.types.forEach(b => { addBonus(b) }) },
         },
         {
-            name: 'trickyBlocks',
-            info: 'Are angles right? ',
+            name: 'Tricky Blocks',
+            info: "Beware of tricky blocks! Can you master their angles? Hitting these blocks will randomly alter the ball's trajectory, testing your skills and adding an unpredictable twist to the game!",
             addPost: () => { BONUSES.timeLeft[BONUSES.types.indexOf('randomAngles')] = 'endless'; addBonus('randomAngles'); },
         },
     ],
@@ -283,7 +290,7 @@ const GAME = {
 
 //INFOS
 const INFO = {
-    element: checkIsTouchDevice ? document.getElementById('game-info-mobile') : document.getElementById('game-info-desktop'),
+    element: isTouchDevice ? document.getElementById('game-info-mobile') : document.getElementById('game-info-desktop'),
     bonus: {
         element: document.getElementById('bonus'),
         duration: document.getElementById('bonus-duration'),
@@ -298,6 +305,7 @@ const INFO = {
     btnPause: document.getElementById('game-btn-pause'),
     default: 'Break All The Blocks!',
 }
+console.log(isTouchDevice, INFO.element)
 
 //PAD
 const PAD = {
@@ -870,7 +878,7 @@ function gameOver(lostOrWon) {
     if (lostOrWon == 'lost') {
         GAME.isLost = true;
         GAME.element.style.filter = 'blur(10px) contrast(2) brightness(1)';
-        addInfo(false, `You lost! Game Over! Scored ${GAME.points} points`)
+        addInfo(false, `You lost! Game Over! You scored ${GAME.points} points.`)
         removeAllSendedBonuses();
         removeAllShots();
         removeAllBonuses();
@@ -885,7 +893,7 @@ function gameOver(lostOrWon) {
         if (GAME.level < GAME.levels.length - 1) {
             GAME.levelUp()
         } else {
-            addInfo(false, 'You Won! Try now other game modes')
+            addInfo(false, 'You won! Try other game modes now.')
             setTimeout(() => {
                 if (!GAME.isGameOver) {
                     goToMenu();
@@ -1106,7 +1114,7 @@ const clock = (interval) => setInterval(() => {
 }, interval)
 
 function addBonus(type, bonusId = 0) {
-    addInfo(3000, `a bonus ${type} added for ${BONUSES.time.default / 1000}s`, INFO.default, bonusId);
+    addInfo(3000, `Added bonus: ${type} for ${BONUSES.time.default / 1000}s!`, INFO.default, bonusId);
     if (BONUSES.timeLeft[BONUSES.types.indexOf(type)] == 0) {
         BONUSES.active[BONUSES.types.indexOf(type)] = createBonusInfo(type, BONUSES.time.default, GAME.points);
     } else {
@@ -1331,13 +1339,8 @@ function addInfo(timeOut, infoStart, infoStop = false, id = 0) {
 // });
 
 
-function checkIsTouchDevice() {
-    return (('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0) ||
-        (navigator.msMaxTouchPoints > 0));
-}
-let isTouchDevice = checkIsTouchDevice();
 
+console.log(isTouchDevice,INFO)
 function symulateKeyboard(isPressed, keyCode) {
     let eventType = 'keyup'
     if (isPressed) {
@@ -1424,7 +1427,7 @@ document.addEventListener('keydown', (e) => {
         }
         BALL.element.style.transition = `${BALL.transition.start} `;
         BLOCKS.container.animation.rowX();
-        addInfo(3000, 'Game Started!', INFO.default, -1);
+        addInfo(3000, 'Game On!', INFO.default, -1);
     }
     if (e.which == 32 && BALL.isBallSticky && !BALL.isBallMoving) {
         BALL.isBallMoving = true;
